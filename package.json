@@ -1,0 +1,17 @@
+{
+  "name": "mysql-to-graphql",
+  "version": "1.0.0",
+  "description": "Scripts for moving data from mysql database to hasura/postgress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Borisa Krstic",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1"
+  }
+}
