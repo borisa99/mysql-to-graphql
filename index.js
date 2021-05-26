@@ -21,12 +21,14 @@ const users = require("./jsonData/users.json");
 let counter = 0;
 const run = async () => {
   // Enter code
-  console.log(users[counter]);
+  const userId = users[counter].id;
+  const response = await mySqlClient.query(
+    `SELECT * FROM project_user WHERE user_id = ${userId}`
+  );
+  console.log(response);
   if (counter < users.length - 1) {
     counter++;
     run();
-  } else {
-    console.log(counter);
   }
 };
 
