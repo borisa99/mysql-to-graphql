@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const util = require("util");
 require("dotenv").config();
 
 const mySqlClient = mysql.createConnection({
@@ -11,7 +12,9 @@ const mySqlClient = mysql.createConnection({
 mySqlClient.connect((err) => {
   if (err) throw err;
 });
+// node native promisify
+const mySqlQuery = util.promisify(mySqlClient.query).bind(mySqlClient);
 
 module.exports = {
-  mySqlClient,
+  mySqlQuery,
 };

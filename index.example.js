@@ -1,5 +1,5 @@
 const { fetch } = require("./hasuraClient");
-const { mySqlClient } = require("./mySqlClient");
+const { mySqlQuery } = require("./mySqlClient");
 
 const { getUsers } = require("./graphql/queries");
 
@@ -8,13 +8,9 @@ const { getUsers } = require("./graphql/queries");
 //   query: getUsers,
 // });
 // const usersResponse = await fetch(usersData);
-// console.log(usersResponse.data);
 
 //MySql example
-// await mySqlClient.query("SELECT * FROM users", (err, result, fields) => {
-//   if (err) throw err;
-//   console.log(result);
-// });
+// const queryResponse =  await mySqlQuery(`SELECT * FROM users`);
 
 const run = async () => {
   // Enter code
