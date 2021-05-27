@@ -1,6 +1,5 @@
 const { fetch } = require("./hasuraClient");
-const { mySqlClient } = require("./mySqlClient");
-
+const { mySqlQuery } = require("./mySqlClient");
 const { getUsers } = require("./graphql/queries");
 
 const users = require("./jsonData/users.json");
@@ -20,15 +19,20 @@ const users = require("./jsonData/users.json");
 
 let counter = 0;
 const run = async () => {
-  // Enter code
-  const userId = users[counter].id;
-  const response = await mySqlClient.query(
-    `SELECT * FROM project_user WHERE user_id = ${userId}`
-  );
-  console.log(response);
-  if (counter < users.length - 1) {
-    counter++;
-    run();
+  try {
+    // Enter code
+    const userId = users[counter].id;
+    const response = await mySqlQuery(
+      `SELECT * FROM project_user WHERE user_id = ${userId}`
+    );
+    console.log("userId,response", userId, response);
+
+    if (counter < users.length - 1) {
+      counter++;
+      run();
+    }
+  } catch (error) {
+    throw error;
   }
 };
 
