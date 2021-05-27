@@ -22,35 +22,33 @@ const users = require("./jsonData/users.json");
 //   })
 // );
 
-let counter = 0;
 const run = async () => {
   try {
-    //Get current user id
-    const userId = users[counter].id;
-    console.log("🚀 ~ user_id", userId);
-
-    if (counter < users.length - 1) {
-      counter++;
-      run();
-    } else {
-      console.log("Finsihed!");
-      //Get elapsed time
-      const precision = 3; // 3 decimal places
-      const elapsed = process.hrtime(start)[1] / 1000000; // divide by a million to get nano to milli
-      console.log(
-        "Execution time: " +
-          Number(process.hrtime(start)[0] / 60).toFixed(0) +
-          " m, " +
-          process.hrtime(start)[0] +
-          " s, " +
-          elapsed.toFixed(precision) +
-          " ms - "
-      ); // print message + time
-      start = process.hrtime(); // reset the timer
-    }
+    const usersMySql = await mySqlQuery(`SELECT * FROM users`);
+    // await usersMySql.forEach((user) => {
+    //   delete user.;
+    // });
+    console.log("🚀 ~ file: index.js ~ line 28 ~ run ~ usersMySql", usersMySql);
+    // await usersMySql.map(async (obj) => {
+    //   const user = await mySqlQuery(`SELECT * FROM users WHERE id = ${obj.id}`);
+    // });
   } catch (error) {
     throw error;
   }
+  console.log("Finsihed!");
+  //Get elapsed time
+  const precision = 3; // 3 decimal places
+  const elapsed = process.hrtime(start)[1] / 1000000; // divide by a million to get nano to milli
+  console.log(
+    "Execution time: " +
+      Number(process.hrtime(start)[0] / 60).toFixed(0) +
+      " m, " +
+      process.hrtime(start)[0] +
+      " s, " +
+      elapsed.toFixed(precision) +
+      " ms - "
+  ); // print message + time
+  start = process.hrtime(); // reset the timer
 };
 
 run();
