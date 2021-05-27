@@ -32,13 +32,14 @@ const run = async () => {
     console.log("🚀 ~ mySql => project_user", project_user);
 
     //Query Hasura
-    const usersData = JSON.stringify({
-      query: getUserById,
-      variables: {
-        id: userId,
-      },
-    });
-    const usersResponse = await fetch(usersData);
+    const usersResponse = await fetch(
+      JSON.stringify({
+        query: getUserById,
+        variables: {
+          id: userId,
+        },
+      })
+    );
     console.log("🚀 ~ hasura => usersResponse", usersResponse.data);
 
     if (counter < users.length - 1) {
