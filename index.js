@@ -6,30 +6,28 @@ const { getUserById } = require("./graphql/queries");
 
 const users = require("./jsonData/users.json");
 
+// //Query mySql
+// const project_user = await mySqlQuery(
+//   `SELECT * FROM project_user WHERE user_id = ${userId}`
+// );
+// console.log("🚀 ~ mySql => project_user", project_user);
+
+// //Query Hasura
+// const usersResponse = await fetch(
+//   JSON.stringify({
+//     query: getUserById,
+//     variables: {
+//       id: userId,
+//     },
+//   })
+// );
+
 let counter = 0;
 const run = async () => {
   try {
-    // Enter code
     //Get current user id
     const userId = users[counter].id;
     console.log("🚀 ~ user_id", userId);
-
-    //Query mySql
-    const project_user = await mySqlQuery(
-      `SELECT * FROM project_user WHERE user_id = ${userId}`
-    );
-    console.log("🚀 ~ mySql => project_user", project_user);
-
-    //Query Hasura
-    const usersResponse = await fetch(
-      JSON.stringify({
-        query: getUserById,
-        variables: {
-          id: userId,
-        },
-      })
-    );
-    console.log("🚀 ~ hasura => usersResponse", usersResponse.data);
 
     if (counter < users.length - 1) {
       counter++;
