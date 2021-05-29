@@ -2,9 +2,6 @@
 let start = process.hrtime();
 const { fetch } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
-const { getUserById } = require("./graphql/queries");
-
-const users = require("./jsonData/users.json");
 
 // //Query mySql
 // const project_user = await mySqlQuery(
@@ -56,6 +53,18 @@ const run = async () => {
       "🚀 ~ file: index.js ~ line 28 ~ run ~ usersMySql",
       JSON.stringify(usersMySql)
     );
+    //Insert users
+    // await fetch(
+    //   JSON.stringify({
+    //     query: `mutation {
+    //       insert_users(objects: ${usersMySql}) {
+    //         returning {
+    //           id
+    //         }
+    //       }
+    //     }`,
+    //   })
+    // );
   } catch (error) {
     throw error;
   }
