@@ -24,14 +24,38 @@ const users = require("./jsonData/users.json");
 
 const run = async () => {
   try {
-    const usersMySql = await mySqlQuery(`SELECT * FROM users`);
-    // await usersMySql.forEach((user) => {
-    //   delete user.;
-    // });
-    console.log("🚀 ~ file: index.js ~ line 28 ~ run ~ usersMySql", usersMySql);
-    // await usersMySql.map(async (obj) => {
-    //   const user = await mySqlQuery(`SELECT * FROM users WHERE id = ${obj.id}`);
-    // });
+    const usersMySql = await mySqlQuery(`SELECT * FROM users LIMIT 10`);
+    await usersMySql.forEach((user) => {
+      delete user.crew_id;
+      delete user.currency;
+      delete user.skype;
+      delete user.landline;
+      delete user.website;
+      delete user.rating;
+      delete user.freelancer;
+      delete user.job_rating;
+      delete user.awarded;
+      delete user.first_project;
+      delete user.hours_first;
+      delete user.cost_first;
+      delete user.manager_comment;
+      delete user.remember_token;
+      delete user.social_provider;
+      delete user.social_nickname;
+      delete user.social_id;
+      delete user.social_token;
+      delete user.social_token_secret;
+      delete user.social_refresh_token;
+      delete user.social_expires_in;
+      delete user.social_avatar;
+      delete user.social_avatar_original;
+      delete user.mattermost_id;
+      delete user.wekan_id;
+    });
+    console.log(
+      "🚀 ~ file: index.js ~ line 28 ~ run ~ usersMySql",
+      JSON.stringify(usersMySql)
+    );
   } catch (error) {
     throw error;
   }
