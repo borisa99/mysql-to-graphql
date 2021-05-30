@@ -11,6 +11,7 @@ const {
   formatAnswers,
   formatAvailabilities,
 } = require("./helpers/dataFormatters");
+const { cleanTimeStamps } = require("./helpers/other");
 const {
   insertUsers,
   insertSkills,
@@ -133,6 +134,21 @@ const run = async () => {
     // );
     // await hasuraClient.request(insertAvailabilities, {
     //   objects: availabilitiesJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Contacts....");
+    const contactsMysql = await mySqlQuery(
+      "SELECT * FROM contacts ORDER BY id DESC LIMIT 1 "
+    );
+    const contactsJson = await cleanTimeStamps(
+      Object.values(JSON.parse(JSON.stringify(contactsMysql)))
+    );
+    console.log(
+      "🚀 ~ file: index.js ~ line 143 ~ run ~ contactsJson",
+      contactsJson
+    );
+    // await hasuraClient.request(insertContacts, {
+    //   objects: contactsJson,
     // });
     console.log("Success!");
   } catch (error) {

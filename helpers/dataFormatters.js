@@ -50,7 +50,9 @@ const formatCountries = async (countries) => {
     delete country.iso_3166_3;
     delete country.region_code;
     delete country.sub_region_code;
-    delete country.deleted_at;
+    if (country.deleted_at) {
+      delete country.deleted_at;
+    }
   });
   return countries;
 };
@@ -89,7 +91,9 @@ const formatProjectSkills = async (projectSkills) => {
     if (!projectSkill.updated_at) {
       delete projectSkill.updated_at;
     }
-    delete projectSkill.deleted_at;
+    if (!projectSkill.deleted_at) {
+      delete projectSkill.deleted_at;
+    }
   });
   return projectSkills;
 };
@@ -102,6 +106,9 @@ const formatAnswers = async (answers) => {
       delete answer.updated_at;
     }
     answer.user_id = parseInt(answer.answer.split(":")[1].split(";")[0]);
+    if (!answer.deleted_at) {
+      delete answer.deleted_at;
+    }
     delete answer.deleted_at;
   });
   return answers;
