@@ -3,22 +3,27 @@ let start = process.hrtime();
 const { hasuraClient } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
 const { formatUsersArray } = require("./helpers/usersHelper");
-const { insertUsers } = require("./graphql/insertMutations");
+const { insertUsers, insertSkills } = require("./graphql/insertMutations");
 
 const run = async () => {
   try {
-    const usersMySql = await mySqlQuery(
-      `SELECT * FROM users ORDER BY created_at DESC LIMIT 1`
-    );
-    const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
-    const usersFormated = await formatUsersArray(usersJson);
-
     //INSERT USERS
-    // const inserUsersResponse = await hasuraClient.request(insertUsers, {
+    // const usersMySql = await mySqlQuery(
+    //   `SELECT * FROM users`
+    // );
+    // const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
+    // const usersFormated = await formatUsersArray(usersJson);
+    // await hasuraClient.request(insertUsers, {
     // objects: usersFormated,
     // });
-
-    
+    //INSERT SKILLS
+    // const skillsMysql = await mySqlQuery(
+    //   "SELECT * FROM skills"
+    // );
+    // const skillsJson = Object.values(JSON.parse(JSON.stringify(skillsMysql)));
+    // await hasuraClient.request(insertSkills, {
+    //   objects: skillsJson,
+    // });
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
   }
