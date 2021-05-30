@@ -64,6 +64,12 @@ const insertAvailabilities = `mutation ($objects: [availabilities_insert_input!]
     }
   } 
   `;
+const insertContacts = `mutation ($objects: [contacts_insert_input!]! = {}) {
+    insert_contacts(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -76,4 +82,5 @@ module.exports = {
   insertProjectSkill,
   insertAnswers,
   insertAvailabilities,
+  insertContacts,
 };
