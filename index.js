@@ -90,13 +90,13 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Projects....");
-    const projectsMysql = await mySqlQuery("SELECT * FROM projects");
-    const projectsJson = await formatProjects(
-      Object.values(JSON.parse(JSON.stringify(projectsMysql)))
-    );
-    await hasuraClient.request(insertProjects, {
-      objects: projectsJson,
-    });
+    // const projectsMysql = await mySqlQuery("SELECT * FROM projects");
+    // const projectsJson = await formatProjects(
+    //   Object.values(JSON.parse(JSON.stringify(projectsMysql)))
+    // );
+    // await hasuraClient.request(insertProjects, {
+    //   objects: projectsJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
