@@ -125,15 +125,15 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Availibilites....");
-    const availabilitiesMysql = await mySqlQuery(
-      "SELECT * FROM availabilities ORDER BY id DESC LIMIT 1"
-    );
-    const availabilitiesJson = await formatAvailabilities(
-      Object.values(JSON.parse(JSON.stringify(availabilitiesMysql)))
-    );
-    await hasuraClient.request(insertAvailabilities, {
-      objects: availabilitiesJson,
-    });
+    // const availabilitiesMysql = await mySqlQuery(
+    //   "SELECT * FROM availabilities"
+    // );
+    // const availabilitiesJson = await formatAvailabilities(
+    //   Object.values(JSON.parse(JSON.stringify(availabilitiesMysql)))
+    // );
+    // await hasuraClient.request(insertAvailabilities, {
+    //   objects: availabilitiesJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
