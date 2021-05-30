@@ -40,6 +40,12 @@ const insertCountries = `mutation ($objects: [countries_insert_input!]! = {}) {
     }
   } 
   `;
+const insertProjects = `mutation ($objects: [projects_insert_input!]! = {}) {
+    insert_projects(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -48,4 +54,5 @@ module.exports = {
   insertBadUrls,
   insertContactUs,
   insertCountries,
+  insertProjects,
 };

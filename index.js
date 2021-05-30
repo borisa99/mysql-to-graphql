@@ -6,6 +6,7 @@ const {
   formatUsersArray,
   formatContactUs,
   formatCountries,
+  formatProjects,
 } = require("./helpers/dataFormatters");
 const {
   insertUsers,
@@ -15,6 +16,7 @@ const {
   insertBadUrls,
   insertContactUs,
   insertCountries,
+  insertProjects,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -86,6 +88,15 @@ const run = async () => {
     // await hasuraClient.request(insertCountries, {
     //   objects: countriesJson,
     // });
+    console.log("Success!");
+    console.log("Migrating Projects....");
+    const projectsMysql = await mySqlQuery("SELECT * FROM projects");
+    const projectsJson = await formatProjects(
+      Object.values(JSON.parse(JSON.stringify(projectsMysql)))
+    );
+    await hasuraClient.request(insertProjects, {
+      objects: projectsJson,
+    });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);

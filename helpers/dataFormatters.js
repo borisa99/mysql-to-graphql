@@ -54,8 +54,37 @@ const formatCountries = async (countries) => {
   });
   return countries;
 };
+
+const formatProjects = async (projects) => {
+  await projects.forEach((project) => {
+    if (project.starting_at instanceof Date) {
+      project.start_at = project.starting_at;
+    }
+    if (!project.work_location) {
+      delete project.work_location;
+    }
+    if (!project.special) {
+      delete project.special;
+    }
+    project.duration_days = project.estimated_duration;
+    project.hours_day = project.expected_hours;
+    project.external_id = JSON.stringify(project.external_id);
+    delete project.starting_at;
+    delete project.date_time;
+    delete project.candidates;
+    delete project.customer_location;
+    delete project.customer_name;
+    delete project.customer_rating;
+    delete project.customer_ratings;
+    delete project.expected_hours;
+    delete project.estimated_duration;
+  });
+  return projects;
+};
+
 module.exports = {
   formatUsersArray,
   formatContactUs,
   formatCountries,
+  formatProjects,
 };
