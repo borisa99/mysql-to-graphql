@@ -1,21 +1,13 @@
-const nodeFetch = require("node-fetch");
+const { GraphQLClient } = require("graphql-request");
 require("dotenv").config();
 
-const fetch = async (data) => {
-  const response = await nodeFetch(process.env.API_URL, {
-    method: "post",
-    body: data,
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": data.length,
-      "X-hasura-admin-secret": process.env.API_SECRET,
-      "User-Agent": "Node",
-    },
-  });
-  const json = await response.json();
-  return json;
-};
+const hasuraClient = new GraphQLClient(process.env.API_URL, {
+  headers: {
+    "Content-Type": "application/json",
+    "X-hasura-admin-secret": process.env.API_SECRET,
+  },
+});
 
 module.exports = {
-  fetch,
+  hasuraClient,
 };

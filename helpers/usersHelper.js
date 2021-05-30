@@ -25,6 +25,8 @@ const formatUsersArray = async (users) => {
     delete user.social_avatar_original;
     delete user.mattermost_id;
     delete user.wekan_id;
+    delete user.manager_rating;
+    delete user.ratings;
   });
   return users;
 };

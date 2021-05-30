@@ -1,24 +1,9 @@
 //Initialize time counter
 let start = process.hrtime();
-const { fetch } = require("./hasuraClient");
+const { hasuraClient } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
 const { formatUsersArray } = require("./helpers/usersHelper");
-
-// //Query mySql
-// const project_user = await mySqlQuery(
-//   `SELECT * FROM project_user WHERE user_id = ${userId}`
-// );
-// console.log("🚀 ~ mySql => project_user", project_user);
-
-// //Query Hasura
-// const usersResponse = await fetch(
-//   JSON.stringify({
-//     query: getUserById,
-//     variables: {
-//       id: userId,
-//     },
-//   })
-// );
+const { insertUsers } = require("./graphql/insertMutations");
 
 const run = async () => {
   try {
@@ -27,24 +12,16 @@ const run = async () => {
     );
     const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
     const usersFormated = await formatUsersArray(usersJson);
-    console.log(
-      "🚀 ~ file: index.js ~ line 30 ~ run ~ usersFormated",
-      usersFormated
-    );
 
-    // Insert users
-    // const response = await fetch({
-    //   query: JSON.stringify(`mutation {
-    //       insert_users(objects: ${usersJson}) {
-    //         returning {
-    //           id
-    //         }
-    //       }
-    //     }`),
-    // });
+    const inserUsersResponse = await hasuraClient.request(insertUsers, {
+      objects: usersFormated,
+    });
+    console.log(
+      "🚀 ~ file: index.js ~ line 19 ~ run ~ inserUsersResponse",
+      inserUsersResponse
+    );
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
-    throw error;
   }
   console.log("Finsihed!");
   //Get elapsed time
