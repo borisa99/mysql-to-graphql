@@ -77,15 +77,15 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Countries....");
-    const countriesMysql = await mySqlQuery(
-      "SELECT * FROM countries ORDER BY id DESC LIMIT 1"
-    );
-    const countriesJson = await formatCountries(
-      Object.values(JSON.parse(JSON.stringify(countriesMysql)))
-    );
-    await hasuraClient.request(insertCountries, {
-      objects: countriesJson,
-    });
+    // const countriesMysql = await mySqlQuery(
+    //   "SELECT * FROM countries"
+    // );
+    // const countriesJson = await formatCountries(
+    //   Object.values(JSON.parse(JSON.stringify(countriesMysql)))
+    // );
+    // await hasuraClient.request(insertCountries, {
+    //   objects: countriesJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
