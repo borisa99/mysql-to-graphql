@@ -52,6 +52,12 @@ const insertProjectSkill = `mutation ($objects: [project_skill_insert_input!]! =
     }
   } 
   `;
+const insertAnswers = `mutation ($objects: [answers_insert_input!]! = {}) {
+    insert_answers(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -62,4 +68,5 @@ module.exports = {
   insertCountries,
   insertProjects,
   insertProjectSkill,
+  insertAnswers,
 };

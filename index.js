@@ -8,6 +8,7 @@ const {
   formatCountries,
   formatProjects,
   formatProjectSkills,
+  formatAnswers,
 } = require("./helpers/dataFormatters");
 const {
   insertUsers,
@@ -19,6 +20,7 @@ const {
   insertCountries,
   insertProjects,
   insertProjectSkill,
+  insertAnswers,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -102,13 +104,22 @@ const run = async () => {
     console.log("Success!");
     console.log("Migrating Project Skills....");
     // const projectSkillMysql = await mySqlQuery(
-    //   "SELECT * FROM project_skill ORDER BY id DESC LIMIT 1"
+    //   "SELECT * FROM project_skill"
     // );
     // const projectSkillJson = await formatProjectSkills(
     //   Object.values(JSON.parse(JSON.stringify(projectSkillMysql)))
     // );
     // await hasuraClient.request(insertProjectSkill, {
     //   objects: projectSkillJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Answers....");
+    // const answersMysql = await mySqlQuery("SELECT * FROM answers");
+    // const answersJson = await formatAnswers(
+    //   Object.values(JSON.parse(JSON.stringify(answersMysql)))
+    // );
+    // await hasuraClient.request(insertAnswers, {
+    //   objects: answersJson,
     // });
     console.log("Success!");
   } catch (error) {

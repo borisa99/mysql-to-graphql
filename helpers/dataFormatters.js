@@ -93,11 +93,28 @@ const formatProjectSkills = async (projectSkills) => {
   });
   return projectSkills;
 };
+const formatAnswers = async (answers) => {
+  await answers.forEach((answer) => {
+    if (!answer.created_at) {
+      delete answer.created_at;
+    }
+    if (!answer.updated_at) {
+      delete answer.updated_at;
+    }
+    answer.user_id = parseInt(answer.answer.split(":")[1].split(";")[0]);
 
+    answer.job_id = 1;
+    answer.user_id = 88;
+
+    delete answer.deleted_at;
+  });
+  return answers;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
   formatCountries,
   formatProjects,
   formatProjectSkills,
+  formatAnswers,
 };
