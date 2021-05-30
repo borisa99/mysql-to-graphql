@@ -102,13 +102,24 @@ const formatAnswers = async (answers) => {
       delete answer.updated_at;
     }
     answer.user_id = parseInt(answer.answer.split(":")[1].split(";")[0]);
-
-    answer.job_id = 1;
-    answer.user_id = 88;
-
     delete answer.deleted_at;
   });
   return answers;
+};
+const formatAvailabilities = async (availabilities) => {
+  await availabilities.forEach((availability) => {
+    if (!availability.created_at) {
+      delete availability.created_at;
+    }
+    if (!availability.updated_at) {
+      delete availability.updated_at;
+    }
+    availability.when = `[${availability.from_date},${availability.to_date}]`;
+    delete availability.deleted_at;
+    delete availability.from_date;
+    delete availability.to_date;
+  });
+  return availabilities;
 };
 module.exports = {
   formatUsersArray,
@@ -117,4 +128,5 @@ module.exports = {
   formatProjects,
   formatProjectSkills,
   formatAnswers,
+  formatAvailabilities,
 };

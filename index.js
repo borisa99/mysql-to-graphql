@@ -9,6 +9,7 @@ const {
   formatProjects,
   formatProjectSkills,
   formatAnswers,
+  formatAvailabilities,
 } = require("./helpers/dataFormatters");
 const {
   insertUsers,
@@ -21,6 +22,7 @@ const {
   insertProjects,
   insertProjectSkill,
   insertAnswers,
+  insertAvailabilities,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -121,6 +123,17 @@ const run = async () => {
     // await hasuraClient.request(insertAnswers, {
     //   objects: answersJson,
     // });
+    console.log("Success!");
+    console.log("Migrating Availibilites....");
+    const availabilitiesMysql = await mySqlQuery(
+      "SELECT * FROM availabilities ORDER BY id DESC LIMIT 1"
+    );
+    const availabilitiesJson = await formatAvailabilities(
+      Object.values(JSON.parse(JSON.stringify(availabilitiesMysql)))
+    );
+    await hasuraClient.request(insertAvailabilities, {
+      objects: availabilitiesJson,
+    });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
