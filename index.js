@@ -2,12 +2,23 @@
 let start = process.hrtime();
 const { hasuraClient } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
-const { formatUsersArray } = require("./helpers/usersHelper");
-const { insertUsers, insertSkills } = require("./graphql/insertMutations");
+const {
+  formatUsersArray,
+  formatContactUs,
+} = require("./helpers/dataFormatters");
+const {
+  insertUsers,
+  insertSkills,
+  insertQuestions,
+  insertCurrencies,
+  insertBadUrls,
+  insertContactUs,
+  insertCountries,
+} = require("./graphql/insertMutations");
 
 const run = async () => {
   try {
-    //INSERT USERS
+    console.log("Migrating Users....");
     // const usersMySql = await mySqlQuery(
     //   `SELECT * FROM users`
     // );
@@ -16,7 +27,8 @@ const run = async () => {
     // await hasuraClient.request(insertUsers, {
     // objects: usersFormated,
     // });
-    //INSERT SKILLS
+    console.log("Success!");
+    console.log("Migrating Skills....");
     // const skillsMysql = await mySqlQuery(
     //   "SELECT * FROM skills"
     // );
@@ -24,6 +36,60 @@ const run = async () => {
     // await hasuraClient.request(insertSkills, {
     //   objects: skillsJson,
     // });
+    console.log("Success!");
+    console.log("Migrating Questions....");
+    // const questionsMysql = await mySqlQuery("SELECT * FROM questions");
+    // const questionsJson = Object.values(
+    //   JSON.parse(JSON.stringify(questionsMysql))
+    // );
+    // await hasuraClient.request(insertQuestions, {
+    //   objects: questionsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Currencies....");
+    // const currenciesMysql = await mySqlQuery(
+    //   "SELECT * FROM currencies"
+    // );
+    // const currenciesJson = Object.values(
+    //   JSON.parse(JSON.stringify(currenciesMysql))
+    // );
+    // await hasuraClient.request(insertCurrencies, {
+    //   objects: currenciesJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Bad URLs....");
+    // const badUrlsMysql = await mySqlQuery("SELECT * FROM bad_urls");
+    // const badUrlsJson = Object.values(JSON.parse(JSON.stringify(badUrlsMysql)));
+    // await hasuraClient.request(insertBadUrls, {
+    //   objects: badUrlsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Contact Us....");
+    // const contactUsMysql = await mySqlQuery(
+    //   "SELECT * FROM contact_us"
+    // );
+    // const contactUsJson = await formatContactUs(
+    //   Object.values(JSON.parse(JSON.stringify(contactUsMysql)))
+    // );
+    // await hasuraClient.request(insertContactUs, {
+    //   objects: contactUsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Countries....");
+    const countriesMysql = await mySqlQuery(
+      "SELECT * FROM countries ORDER BY id DESC LIMIT 1"
+    );
+    const countriesJson = Object.values(
+      JSON.parse(JSON.stringify(countriesMysql))
+    );
+    console.log(
+      "🚀 ~ file: index.js ~ line 85 ~ run ~ countriesJson",
+      countriesJson
+    );
+    // await hasuraClient.request(insertCountries, {
+    //   objects: countriesJson,
+    // });
+    console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
   }

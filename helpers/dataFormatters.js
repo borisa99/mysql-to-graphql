@@ -30,6 +30,14 @@ const formatUsersArray = async (users) => {
   });
   return users;
 };
+const formatContactUs = async (data) => {
+  await data.forEach((obj) => {
+    obj.mobile = obj.phone;
+    delete obj.phone;
+  });
+  return data;
+};
 module.exports = {
   formatUsersArray,
+  formatContactUs,
 };
