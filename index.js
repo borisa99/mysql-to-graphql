@@ -2,6 +2,7 @@
 let start = process.hrtime();
 const { fetch } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
+const { formatUsersArray } = require("./helpers/usersHelper");
 
 // //Query mySql
 // const project_user = await mySqlQuery(
@@ -21,51 +22,28 @@ const { mySqlQuery } = require("./mySqlClient");
 
 const run = async () => {
   try {
-    const usersMySql = await mySqlQuery(`SELECT * FROM users LIMIT 10`);
-    await usersMySql.forEach((user) => {
-      delete user.crew_id;
-      delete user.currency;
-      delete user.skype;
-      delete user.landline;
-      delete user.website;
-      delete user.rating;
-      delete user.freelancer;
-      delete user.job_rating;
-      delete user.awarded;
-      delete user.first_project;
-      delete user.hours_first;
-      delete user.cost_first;
-      delete user.manager_comment;
-      delete user.remember_token;
-      delete user.social_provider;
-      delete user.social_nickname;
-      delete user.social_id;
-      delete user.social_token;
-      delete user.social_token_secret;
-      delete user.social_refresh_token;
-      delete user.social_expires_in;
-      delete user.social_avatar;
-      delete user.social_avatar_original;
-      delete user.mattermost_id;
-      delete user.wekan_id;
-    });
-    console.log(
-      "🚀 ~ file: index.js ~ line 28 ~ run ~ usersMySql",
-      JSON.stringify(usersMySql)
+    const usersMySql = await mySqlQuery(
+      `SELECT * FROM users ORDER BY created_at DESC LIMIT 1`
     );
-    //Insert users
-    // await fetch(
-    //   JSON.stringify({
-    //     query: `mutation {
-    //       insert_users(objects: ${usersMySql}) {
+    const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
+    const usersFormated = await formatUsersArray(usersJson);
+    console.log(
+      "🚀 ~ file: index.js ~ line 30 ~ run ~ usersFormated",
+      usersFormated
+    );
+
+    // Insert users
+    // const response = await fetch({
+    //   query: JSON.stringify(`mutation {
+    //       insert_users(objects: ${usersJson}) {
     //         returning {
     //           id
     //         }
     //       }
-    //     }`,
-    //   })
-    // );
+    //     }`),
+    // });
   } catch (error) {
+    console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
     throw error;
   }
   console.log("Finsihed!");
