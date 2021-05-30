@@ -25,6 +25,7 @@ const {
   insertAnswers,
   insertAvailabilities,
   insertContacts,
+  insertCustomers,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -139,14 +140,24 @@ const run = async () => {
     console.log("Success!");
     console.log("Migrating Contacts....");
     // const contactsMysql = await mySqlQuery(
-    //   "SELECT * FROM contacts ORDER BY id DESC LIMIT 1 "
+    //   "SELECT * FROM contacts"
     // );
     // const contactsJson = await cleanTimeStamps(
     //   Object.values(JSON.parse(JSON.stringify(contactsMysql)))
     // );
-    // contactsJson[0].user_id = 88;
     // await hasuraClient.request(insertContacts, {
     //   objects: contactsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Customers....");
+    // const customersMysql = await mySqlQuery(
+    //   "SELECT * FROM customers ORDER BY id DESC LIMIT 1 "
+    // );
+    // const customersJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(customersMysql)))
+    // );
+    // await hasuraClient.request(insertCustomers, {
+    //   objects: customersJson,
     // });
     console.log("Success!");
   } catch (error) {
