@@ -81,10 +81,23 @@ const formatProjects = async (projects) => {
   });
   return projects;
 };
+const formatProjectSkills = async (projectSkills) => {
+  await projectSkills.forEach((projectSkill) => {
+    if (!projectSkill.created_at) {
+      delete projectSkill.created_at;
+    }
+    if (!projectSkill.updated_at) {
+      delete projectSkill.updated_at;
+    }
+    delete projectSkill.deleted_at;
+  });
+  return projectSkills;
+};
 
 module.exports = {
   formatUsersArray,
   formatContactUs,
   formatCountries,
   formatProjects,
+  formatProjectSkills,
 };
