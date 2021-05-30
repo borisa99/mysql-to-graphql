@@ -13,13 +13,12 @@ const run = async () => {
     const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
     const usersFormated = await formatUsersArray(usersJson);
 
-    const inserUsersResponse = await hasuraClient.request(insertUsers, {
-      objects: usersFormated,
-    });
-    console.log(
-      "🚀 ~ file: index.js ~ line 19 ~ run ~ inserUsersResponse",
-      inserUsersResponse
-    );
+    //INSERT USERS
+    // const inserUsersResponse = await hasuraClient.request(insertUsers, {
+    // objects: usersFormated,
+    // });
+
+    
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
   }
