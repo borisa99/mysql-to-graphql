@@ -37,7 +37,25 @@ const formatContactUs = async (data) => {
   });
   return data;
 };
+const formatCountries = async (countries) => {
+  await countries.forEach((country) => {
+    delete country.capital;
+    delete country.capital;
+    delete country.citizenship;
+    delete country.country_code;
+    delete country.currency_sub_unit;
+    delete country.currency_decimals;
+    delete country.full_name;
+    delete country.iso_3166_2;
+    delete country.iso_3166_3;
+    delete country.region_code;
+    delete country.sub_region_code;
+    delete country.deleted_at;
+  });
+  return countries;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
+  formatCountries,
 };

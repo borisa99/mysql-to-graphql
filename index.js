@@ -5,6 +5,7 @@ const { mySqlQuery } = require("./mySqlClient");
 const {
   formatUsersArray,
   formatContactUs,
+  formatCountries,
 } = require("./helpers/dataFormatters");
 const {
   insertUsers,
@@ -79,16 +80,12 @@ const run = async () => {
     const countriesMysql = await mySqlQuery(
       "SELECT * FROM countries ORDER BY id DESC LIMIT 1"
     );
-    const countriesJson = Object.values(
-      JSON.parse(JSON.stringify(countriesMysql))
+    const countriesJson = await formatCountries(
+      Object.values(JSON.parse(JSON.stringify(countriesMysql)))
     );
-    console.log(
-      "🚀 ~ file: index.js ~ line 85 ~ run ~ countriesJson",
-      countriesJson
-    );
-    // await hasuraClient.request(insertCountries, {
-    //   objects: countriesJson,
-    // });
+    await hasuraClient.request(insertCountries, {
+      objects: countriesJson,
+    });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
