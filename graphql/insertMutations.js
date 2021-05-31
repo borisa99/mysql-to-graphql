@@ -142,6 +142,12 @@ const insertTrackers = `mutation ($objects: [trackers_insert_input!]! = {}) {
     }
   } 
   `;
+const insertWebs = `mutation ($objects: [webs_insert_input!]! = {}) {
+    insert_webs(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 
 module.exports = {
   insertUsers,
@@ -168,4 +174,5 @@ module.exports = {
   insertTasks,
   insertUserCountries,
   insertTrackers,
+  insertWebs,
 };

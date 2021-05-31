@@ -148,6 +148,19 @@ const formatProjectUser = async (array) => {
   });
   return arrayFormated;
 };
+const formatWebs = async (webs) => {
+  const websFormated = await cleanTimeStamps(webs);
+  await websFormated.forEach((web) => {
+    delete web.link_url;
+    delete web.username;
+    delete web.main;
+    delete web.exists;
+    if (!web.contacted_by) {
+      delete web.contacted_by;
+    }
+  });
+  return websFormated;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
@@ -158,4 +171,5 @@ module.exports = {
   formatAvailabilities,
   formatLanguages,
   formatProjectUser,
+  formatWebs,
 };
