@@ -130,6 +130,12 @@ const insertTasks = `mutation ($objects: [tasks_insert_input!]! = {}) {
     }
   } 
   `;
+const insertUserCountries = `mutation ($objects: [user_countries_insert_input!]! = {}) {
+    insert_user_countries(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -153,4 +159,5 @@ module.exports = {
   insertRates,
   insertUserSkills,
   insertTasks,
+  insertUserCountries,
 };

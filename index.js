@@ -37,6 +37,7 @@ const {
   insertRates,
   insertUserSkills,
   insertTasks,
+  insertUserCountries,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -250,12 +251,23 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Tasks....");
-    // const tasksMysql = await mySqlQuery("SELECT * FROM");
+    // const tasksMysql = await mySqlQuery("SELECT * FROM tasks");
     // const tasksJson = await cleanTimeStamps(
     //   Object.values(JSON.parse(JSON.stringify(tasksMysql)))
     // );
     // await hasuraClient.request(insertTasks, {
     //   objects: tasksJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating User Countries....");
+    // const userCountriesMysql = await mySqlQuery(
+    //   "SELECT * FROM user_countries"
+    // );
+    // const userCountriesJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(userCountriesMysql)))
+    // );
+    // await hasuraClient.request(insertUserCountries, {
+    //   objects: userCountriesJson,
     // });
     console.log("Success!");
   } catch (error) {
