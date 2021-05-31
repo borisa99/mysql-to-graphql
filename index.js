@@ -27,6 +27,7 @@ const {
   insertContacts,
   insertCustomers,
   insertEducations,
+  insertEmployments,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -162,15 +163,39 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Educations....");
-    const educationsMysql = await mySqlQuery(
-      "SELECT * FROM educations ORDER BY id DESC LIMIT 1 "
+    // const educationsMysql = await mySqlQuery(
+    //   "SELECT * FROM educations"
+    // );
+    // const educationsJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(educationsMysql)))
+    // );
+    // await hasuraClient.request(insertEducations, {
+    //   objects: educationsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Employments....");
+    // const employmentsMysql = await mySqlQuery("SELECT * FROM employments");
+    // const employmentsJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(employmentsMysql)))
+    // );
+    // await hasuraClient.request(insertEmployments, {
+    //   objects: employmentsJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Languages....");
+    const languagesMysql = await mySqlQuery(
+      "SELECT * FROM languages ORDER BY id DESC LIMIT 1"
     );
-    const educationsJson = await cleanTimeStamps(
-      Object.values(JSON.parse(JSON.stringify(educationsMysql)))
+    const languagesJson = await cleanTimeStamps(
+      Object.values(JSON.parse(JSON.stringify(languagesMysql)))
     );
-    await hasuraClient.request(insertEducations, {
-      objects: educationsJson,
-    });
+    console.log(
+      "🚀 ~ file: index.js ~ line 190 ~ run ~ languagesJson",
+      languagesJson
+    );
+    // await hasuraClient.request(insertLanguages, {
+    //   objects: languagesJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);

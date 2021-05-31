@@ -82,6 +82,12 @@ const insertEducations = `mutation ($objects: [educations_insert_input!]! = {}) 
     }
   } 
   `;
+const insertEmployments = `mutation ($objects: [employments_insert_input!]! = {}) {
+    insert_employments(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -97,4 +103,5 @@ module.exports = {
   insertContacts,
   insertCustomers,
   insertEducations,
+  insertEmployments,
 };
