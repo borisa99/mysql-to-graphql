@@ -94,6 +94,12 @@ const insertLanguages = `mutation ($objects: [languages_insert_input!]! = {}) {
     }
   } 
   `;
+const insertPortfolios = `mutation ($objects: [portfolios_insert_input!]! = {}) {
+    insert_portfolios(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -111,4 +117,5 @@ module.exports = {
   insertEducations,
   insertEmployments,
   insertLanguages,
+  insertPortfolios,
 };

@@ -30,6 +30,7 @@ const {
   insertEducations,
   insertEmployments,
   insertLanguages,
+  insertPortfolios,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -195,19 +196,13 @@ const run = async () => {
     //   objects: languagesJson,
     // });
     console.log("Success!");
-    console.log("Migrating notifications....");
-    const notificationsMysql = await mySqlQuery(
-      "SELECT * FROM notifications ORDER BY id DESC LIMIT 1"
-    );
-    const notificationsJson = await formatnotifications(
-      Object.values(JSON.parse(JSON.stringify(notificationsMysql)))
-    );
-    console.log(
-      "🚀 ~ file: index.js ~ line 205 ~ run ~ notificationsJson",
-      notificationsJson
-    );
-    // await hasuraClient.request(insertNotifications, {
-    //   objects: notificationsJson,
+    console.log("Migrating Portfolios....");
+    // const portfoliosMysql = await mySqlQuery("SELECT * FROM portfolios");
+    // const portfoliosJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(portfoliosMysql)))
+    // );
+    // await hasuraClient.request(insertPortfolios, {
+    //   objects: portfoliosJson,
     // });
     console.log("Success!");
   } catch (error) {
