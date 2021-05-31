@@ -283,13 +283,13 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Webs....");
-    const websMysql = await mySqlQuery("SELECT * FROM webs");
-    const websJson = await formatWebs(
-      Object.values(JSON.parse(JSON.stringify(websMysql)))
-    );
-    await hasuraClient.request(insertWebs, {
-      objects: websJson,
-    });
+    // const websMysql = await mySqlQuery("SELECT * FROM webs");
+    // const websJson = await formatWebs(
+    //   Object.values(JSON.parse(JSON.stringify(websMysql)))
+    // );
+    // await hasuraClient.request(insertWebs, {
+    //   objects: websJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
