@@ -118,6 +118,12 @@ const insertRates = `mutation ($objects: [rates_insert_input!]! = {}) {
     }
   } 
   `;
+const insertUserSkills = `mutation ($objects: [user_skills_insert_input!]! = {}) {
+    insert_user_skills(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -139,4 +145,5 @@ module.exports = {
   insertProfiles,
   insertProjectUser,
   insertRates,
+  insertUserSkills,
 };
