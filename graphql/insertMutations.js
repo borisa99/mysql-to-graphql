@@ -100,6 +100,12 @@ const insertPortfolios = `mutation ($objects: [portfolios_insert_input!]! = {}) 
     }
   } 
   `;
+const insertProfiles = `mutation ($objects: [profiles_insert_input!]! = {}) {
+    insert_profiles(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -118,4 +124,5 @@ module.exports = {
   insertEmployments,
   insertLanguages,
   insertPortfolios,
+  insertProfiles,
 };
