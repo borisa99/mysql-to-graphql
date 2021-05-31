@@ -11,6 +11,7 @@ const {
   formatAnswers,
   formatAvailabilities,
   formatLanguages,
+  formatProjectUser,
 } = require("./helpers/dataFormatters");
 const { cleanTimeStamps } = require("./helpers/other");
 const {
@@ -32,6 +33,7 @@ const {
   insertLanguages,
   insertPortfolios,
   insertProfiles,
+  insertProjectUser,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -215,6 +217,15 @@ const run = async () => {
     // );
     // await hasuraClient.request(insertProfiles, {
     //   objects: profilesJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating projectUser....");
+    // const projectUserMysql = await mySqlQuery("SELECT * FROM project_user");
+    // const projectUserJson = await formatProjectUser(
+    //   Object.values(JSON.parse(JSON.stringify(projectUserMysql)))
+    // );
+    // await hasuraClient.request(insertProjectUser, {
+    //   objects: projectUserJson,
     // });
     console.log("Success!");
   } catch (error) {

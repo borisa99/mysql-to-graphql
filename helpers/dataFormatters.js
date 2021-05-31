@@ -141,6 +141,13 @@ const formatLanguages = async (languages) => {
   });
   return languagesFormated;
 };
+const formatProjectUser = async (array) => {
+  const arrayFormated = await cleanTimeStamps(array);
+  await arrayFormated.forEach((obj) => {
+    delete obj.id;
+  });
+  return arrayFormated;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
@@ -150,4 +157,5 @@ module.exports = {
   formatAnswers,
   formatAvailabilities,
   formatLanguages,
+  formatProjectUser,
 };
