@@ -185,15 +185,30 @@ const run = async () => {
     // });
     console.log("Success!");
     console.log("Migrating Languages....");
-    const languagesMysql = await mySqlQuery(
-      "SELECT * FROM languages ORDER BY id DESC LIMIT 1"
+    // const languagesMysql = await mySqlQuery(
+    //   "SELECT * FROM languages"
+    // );
+    // const languagesJson = await formatLanguages(
+    //   Object.values(JSON.parse(JSON.stringify(languagesMysql)))
+    // );
+    // await hasuraClient.request(insertLanguages, {
+    //   objects: languagesJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating notifications....");
+    const notificationsMysql = await mySqlQuery(
+      "SELECT * FROM notifications ORDER BY id DESC LIMIT 1"
     );
-    const languagesJson = await formatLanguages(
-      Object.values(JSON.parse(JSON.stringify(languagesMysql)))
+    const notificationsJson = await formatnotifications(
+      Object.values(JSON.parse(JSON.stringify(notificationsMysql)))
     );
-    await hasuraClient.request(insertLanguages, {
-      objects: languagesJson,
-    });
+    console.log(
+      "🚀 ~ file: index.js ~ line 205 ~ run ~ notificationsJson",
+      notificationsJson
+    );
+    // await hasuraClient.request(insertNotifications, {
+    //   objects: notificationsJson,
+    // });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
