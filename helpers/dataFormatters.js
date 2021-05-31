@@ -1,7 +1,9 @@
 const { cleanTimeStamps } = require("./other");
 
 const formatUsersArray = async (users) => {
-  await users.forEach((user) => {
+  const usersFormated = await cleanTimeStamps(users);
+
+  await usersFormated.forEach((user) => {
     delete user.crew_id;
     delete user.currency;
     delete user.skype;
@@ -29,8 +31,11 @@ const formatUsersArray = async (users) => {
     delete user.wekan_id;
     delete user.manager_rating;
     delete user.ratings;
+    if (!user.birth) {
+      delete user.birth;
+    }
   });
-  return users;
+  return usersFormated;
 };
 const formatContactUs = async (data) => {
   await data.forEach((obj) => {

@@ -46,11 +46,22 @@ const {
 const run = async () => {
   try {
     console.log("Migrating Users....");
-    const usersMySql = await mySqlQuery(`SELECT * FROM users`);
+    const usersMySql = await mySqlQuery(`SELECT * FROM users LIMIT 2800`);
     const usersJson = Object.values(JSON.parse(JSON.stringify(usersMySql)));
     const usersFormated = await formatUsersArray(usersJson);
     await hasuraClient.request(insertUsers, {
       objects: usersFormated,
+    });
+
+    const usersMySqlSecond = await mySqlQuery(
+      `SELECT * FROM users LIMIT 1000 OFFSET 2800`
+    );
+    const usersJsonSecond = Object.values(
+      JSON.parse(JSON.stringify(usersMySqlSecond))
+    );
+    const usersFormatedSecond = await formatUsersArray(usersJsonSecond);
+    await hasuraClient.request(insertUsers, {
+      objects: usersFormatedSecond,
     });
     console.log("Success!");
     console.log("Migrating Skills....");
@@ -268,7 +279,7 @@ const run = async () => {
     });
     console.log("Success!");
   } catch (error) {
-    console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
+    console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error.message);
   }
   console.log("Finsihed!");
   //Get elapsed time
