@@ -124,6 +124,12 @@ const insertUserSkills = `mutation ($objects: [user_skills_insert_input!]! = {})
     }
   } 
   `;
+const insertTasks = `mutation ($objects: [tasks_insert_input!]! = {}) {
+    insert_tasks(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
 module.exports = {
   insertUsers,
   insertSkills,
@@ -146,4 +152,5 @@ module.exports = {
   insertProjectUser,
   insertRates,
   insertUserSkills,
+  insertTasks,
 };
