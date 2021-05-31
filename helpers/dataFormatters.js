@@ -1,3 +1,5 @@
+const { cleanTimeStamps } = require("./other");
+
 const formatUsersArray = async (users) => {
   await users.forEach((user) => {
     delete user.crew_id;
@@ -128,6 +130,17 @@ const formatAvailabilities = async (availabilities) => {
   });
   return availabilities;
 };
+const formatLanguages = async (languages) => {
+  const languagesFormated = await cleanTimeStamps(languages);
+  await languagesFormated.forEach((language) => {
+    language.language = language.name;
+    language.user_id = 88;
+
+    delete language.name;
+    delete language.iso;
+  });
+  return languagesFormated;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
@@ -136,4 +149,5 @@ module.exports = {
   formatProjectSkills,
   formatAnswers,
   formatAvailabilities,
+  formatLanguages,
 };

@@ -10,6 +10,7 @@ const {
   formatProjectSkills,
   formatAnswers,
   formatAvailabilities,
+  formatLanguages,
 } = require("./helpers/dataFormatters");
 const { cleanTimeStamps } = require("./helpers/other");
 const {
@@ -28,6 +29,7 @@ const {
   insertCustomers,
   insertEducations,
   insertEmployments,
+  insertLanguages,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -186,16 +188,12 @@ const run = async () => {
     const languagesMysql = await mySqlQuery(
       "SELECT * FROM languages ORDER BY id DESC LIMIT 1"
     );
-    const languagesJson = await cleanTimeStamps(
+    const languagesJson = await formatLanguages(
       Object.values(JSON.parse(JSON.stringify(languagesMysql)))
     );
-    console.log(
-      "🚀 ~ file: index.js ~ line 190 ~ run ~ languagesJson",
-      languagesJson
-    );
-    // await hasuraClient.request(insertLanguages, {
-    //   objects: languagesJson,
-    // });
+    await hasuraClient.request(insertLanguages, {
+      objects: languagesJson,
+    });
     console.log("Success!");
   } catch (error) {
     console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error);
