@@ -136,6 +136,13 @@ const insertUserCountries = `mutation ($objects: [user_countries_insert_input!]!
     }
   } 
   `;
+const insertTrackers = `mutation ($objects: [trackers_insert_input!]! = {}) {
+    insert_trackers(objects: $objects) {
+      affected_rows
+    }
+  } 
+  `;
+
 module.exports = {
   insertUsers,
   insertSkills,
@@ -160,4 +167,5 @@ module.exports = {
   insertUserSkills,
   insertTasks,
   insertUserCountries,
+  insertTrackers,
 };

@@ -38,6 +38,7 @@ const {
   insertUserSkills,
   insertTasks,
   insertUserCountries,
+  insertTrackers,
 } = require("./graphql/insertMutations");
 
 const run = async () => {
@@ -268,6 +269,15 @@ const run = async () => {
     // );
     // await hasuraClient.request(insertUserCountries, {
     //   objects: userCountriesJson,
+    // });
+    console.log("Success!");
+    console.log("Migrating Trackers....");
+    // const trackersMysql = await mySqlQuery("SELECT * FROM trackers");
+    // const trackersJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(trackersMysql)))
+    // );
+    // await hasuraClient.request(insertTrackers, {
+    //   objects: trackersJson,
     // });
     console.log("Success!");
   } catch (error) {
