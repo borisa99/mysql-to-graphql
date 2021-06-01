@@ -251,6 +251,32 @@ const formatWebs = async (webs) => {
   // });
   return websFormated;
 };
+
+const formatRates = async (rates) => {
+  const ratesFormated = await cleanTimeStamps(rates);
+  await ratesFormated.forEach((skill) => {
+    if (parseInt(skill.minimum_hour)) {
+      skill.minimum_hour = parseInt(skill.minimum_hour).toFixed(0);
+    } else {
+      delete skill.minimum_hour;
+    }
+    if (parseFloat(skill.hourly_rate)) {
+      skill.hourly_rate = parseFloat(skill.hourly_rate).toFixed(2);
+    } else {
+      delete skill.hourly_rate;
+    }
+    if (parseFloat(skill.hourly_rate_max)) {
+      skill.hourly_rate_max = parseFloat(skill.hourly_rate_max).toFixed(2);
+    } else {
+      delete skill.hourly_rate_max;
+    }
+    if (!skill.type) {
+      delete skill.type;
+    }
+  });
+
+  return ratesFormated;
+};
 module.exports = {
   formatUsersArray,
   formatContactUs,
@@ -263,4 +289,5 @@ module.exports = {
   formatProjectUser,
   formatWebs,
   formatUserSkills,
+  formatRates,
 };

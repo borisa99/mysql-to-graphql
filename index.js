@@ -15,6 +15,7 @@ const {
   formatProjectUser,
   formatWebs,
   formatUserSkills,
+  formatRates,
 } = require("./helpers/dataFormatters");
 const { cleanTimeStamps } = require("./helpers/other");
 const {
@@ -227,13 +228,14 @@ const run = async () => {
     });
     console.log("Success!");
     console.log("Migrating Rates....");
-    // const ratesMysql = await mySqlQuery("SELECT * FROM rates");
-    // const ratesJson = await cleanTimeStamps(
-    //   Object.values(JSON.parse(JSON.stringify(ratesMysql)))
-    // );
-    // await hasuraClient.request(insertRates, {
-    //   objects: ratesJson,
-    // });
+    const ratesMysql = await mySqlQuery("SELECT * FROM rates");
+    const ratesJson = await formatRates(
+      Object.values(JSON.parse(JSON.stringify(ratesMysql)))
+    );
+
+    await hasuraClient.request(insertRates, {
+      objects: ratesJson,
+    });
     console.log("Success!");
     console.log("Migrating User Skills....");
     const userSkillsMysql = await mySqlQuery(
