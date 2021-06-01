@@ -152,23 +152,35 @@ const formatAnswers = async (answers) => {
     }
     delete answer.deleted_at;
   });
-  await answers.filter(async (answer) => {
-    const response = await hasuraClient.request(getUserById, {
-      id: answer.user_id,
+  // await answers.filter(async (answer) => {
+  //   const response = await hasuraClient.request(getUserById, {
+  //     id: answer.user_id,
+  //   });
+
+  //   const isTrue = !(
+  //     !answer.user_id ||
+  //     !response.users[0] ||
+  //     answer.id === 632 ||
+  //     answer.id === 633 ||
+  //     answer.id === 634 ||
+  //     answer.id === 635
+  //   );
+
+  //   return isTrue;
+  // });
+  const answersFiltered = await answers.filter(async (answer, index) => {
+    const user = _.find(users, function (user) {
+      return user.id == answer.user_id;
     });
-
-    const isTrue = !(
-      !answer.user_id ||
-      !response.users[0] ||
-      answer.id === 632 ||
-      answer.id === 633 ||
-      answer.id === 634 ||
-      answer.id === 635
-    );
-
-    return isTrue;
+    if (!user) {
+      console.log(answer.id + ",");
+    }
+    // if (!answer.user_id) {
+    //   console.log(answer.id + ",");
+    // }
+    return answer.user_id ? true : false;
   });
-  return answers;
+  return answersFiltered;
 };
 const formatAvailabilities = async (availabilities) => {
   await availabilities.forEach((availability) => {

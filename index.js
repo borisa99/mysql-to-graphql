@@ -135,15 +135,13 @@ const run = async () => {
     });
     console.log("Success!");
     console.log("Migrating Answers....");
-    // const answersMysql = await mySqlQuery("SELECT * FROM answers");
-    // const answersJson = await formatAnswers(
-    //   Object.values(JSON.parse(JSON.stringify(answersMysql)))
-    // );
-    // await setTimeout(async () => {
-    //   await hasuraClient.request(insertAnswers, {
-    //     objects: answersJson,
-    //   });
-    // }, 5000);
+    const answersMysql = await mySqlQuery("SELECT * FROM answers");
+    const answersJson = await formatAnswers(
+      Object.values(JSON.parse(JSON.stringify(answersMysql)))
+    );
+    await hasuraClient.request(insertAnswers, {
+      objects: answersJson,
+    });
     console.log("Success!");
     console.log("Migrating Availibilites....");
     const availabilitiesMysql = await mySqlQuery(
