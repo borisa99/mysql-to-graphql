@@ -7,6 +7,7 @@ const getUsers = `query {
 const getUserById = `query ($id:Int!){
     users( where:{ id:{_eq:$id } }){
       name
+      id
     }
   }`;
 

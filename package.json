@@ -12,6 +12,8 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "graphql-request": "^3.4.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1"
   }

@@ -2,6 +2,7 @@
 let start = process.hrtime();
 const { hasuraClient } = require("./hasuraClient");
 const { mySqlQuery } = require("./mySqlClient");
+const _ = require("lodash");
 const {
   formatUsersArray,
   formatContactUs,
@@ -13,6 +14,7 @@ const {
   formatLanguages,
   formatProjectUser,
   formatWebs,
+  formatUserSkills,
 } = require("./helpers/dataFormatters");
 const { cleanTimeStamps } = require("./helpers/other");
 const {
@@ -73,8 +75,8 @@ const run = async () => {
     console.log("Success!");
     console.log("Migrating Questions....");
     const questionsMysql = await mySqlQuery("SELECT * FROM questions");
-    const questionsJson = Object.values(
-      JSON.parse(JSON.stringify(questionsMysql))
+    const questionsJson = await cleanTimeStamps(
+      Object.values(JSON.parse(JSON.stringify(questionsMysql)))
     );
     await hasuraClient.request(insertQuestions, {
       objects: questionsJson,
@@ -133,13 +135,15 @@ const run = async () => {
     });
     console.log("Success!");
     console.log("Migrating Answers....");
-    const answersMysql = await mySqlQuery("SELECT * FROM answers");
-    const answersJson = await formatAnswers(
-      Object.values(JSON.parse(JSON.stringify(answersMysql)))
-    );
-    await hasuraClient.request(insertAnswers, {
-      objects: answersJson,
-    });
+    // const answersMysql = await mySqlQuery("SELECT * FROM answers");
+    // const answersJson = await formatAnswers(
+    //   Object.values(JSON.parse(JSON.stringify(answersMysql)))
+    // );
+    // await setTimeout(async () => {
+    //   await hasuraClient.request(insertAnswers, {
+    //     objects: answersJson,
+    //   });
+    // }, 5000);
     console.log("Success!");
     console.log("Migrating Availibilites....");
     const availabilitiesMysql = await mySqlQuery(
@@ -225,21 +229,50 @@ const run = async () => {
     });
     console.log("Success!");
     console.log("Migrating Rates....");
-    const ratesMysql = await mySqlQuery("SELECT * FROM rates");
-    const ratesJson = await cleanTimeStamps(
-      Object.values(JSON.parse(JSON.stringify(ratesMysql)))
-    );
-    await hasuraClient.request(insertRates, {
-      objects: ratesJson,
-    });
+    // const ratesMysql = await mySqlQuery("SELECT * FROM rates");
+    // const ratesJson = await cleanTimeStamps(
+    //   Object.values(JSON.parse(JSON.stringify(ratesMysql)))
+    // );
+    // await hasuraClient.request(insertRates, {
+    //   objects: ratesJson,
+    // });
     console.log("Success!");
     console.log("Migrating User Skills....");
-    const userSkillsMysql = await mySqlQuery("SELECT * FROM users_skill");
-    const userSkillsJson = await cleanTimeStamps(
+    const userSkillsMysql = await mySqlQuery(
+      "SELECT * FROM users_skill LIMIT 5000"
+    );
+    const userSkillsJson = await formatUserSkills(
       Object.values(JSON.parse(JSON.stringify(userSkillsMysql)))
     );
     await hasuraClient.request(insertUserSkills, {
       objects: userSkillsJson,
+    });
+    const userSkillsMysqlSecond = await mySqlQuery(
+      "SELECT * FROM users_skill LIMIT 5000 OFFSET 5000"
+    );
+    const userSkillsJsonSecond = await formatUserSkills(
+      Object.values(JSON.parse(JSON.stringify(userSkillsMysqlSecond)))
+    );
+    await hasuraClient.request(insertUserSkills, {
+      objects: userSkillsJsonSecond,
+    });
+    const userSkillsMysqlThird = await mySqlQuery(
+      "SELECT * FROM users_skill LIMIT 5000 OFFSET 10000"
+    );
+    const userSkillsJsonThird = await formatUserSkills(
+      Object.values(JSON.parse(JSON.stringify(userSkillsMysqlThird)))
+    );
+    await hasuraClient.request(insertUserSkills, {
+      objects: userSkillsJsonThird,
+    });
+    const userSkillsMysqlFourth = await mySqlQuery(
+      "SELECT * FROM users_skill LIMIT 5000 OFFSET 15000"
+    );
+    const userSkillsJsonFourth = await formatUserSkills(
+      Object.values(JSON.parse(JSON.stringify(userSkillsMysqlFourth)))
+    );
+    await hasuraClient.request(insertUserSkills, {
+      objects: userSkillsJsonFourth,
     });
     console.log("Success!");
     console.log("Migrating Tasks....");
@@ -279,7 +312,10 @@ const run = async () => {
     });
     console.log("Success!");
   } catch (error) {
-    console.log("🚀 ~ file: index.js ~ line 67 ~ run ~ error", error.message);
+    console.log(
+      "🚀 ~ file: index.js ~ line 67 ~ run ~ error",
+      JSON.stringify(error.message).substr(0, 1000)
+    );
   }
   console.log("Finsihed!");
   //Get elapsed time

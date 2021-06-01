@@ -1,5 +1,9 @@
 const { cleanTimeStamps } = require("./other");
-
+const { hasuraClient } = require("../hasuraClient");
+const { getUserById } = require("../graphql/queries");
+const moment = require("moment");
+const users = require("../jsonData/users.json");
+const _ = require("lodash");
 const formatUsersArray = async (users) => {
   const usersFormated = await cleanTimeStamps(users);
 
@@ -45,7 +49,9 @@ const formatContactUs = async (data) => {
   return data;
 };
 const formatCountries = async (countries) => {
-  await countries.forEach((country) => {
+  const countriesFormated = await cleanTimeStamps(countries);
+
+  await countriesFormated.forEach((country) => {
     delete country.capital;
     delete country.capital;
     delete country.citizenship;
@@ -61,11 +67,17 @@ const formatCountries = async (countries) => {
       delete country.deleted_at;
     }
   });
-  return countries;
+  return countriesFormated;
 };
 
 const formatProjects = async (projects) => {
-  await projects.forEach((project) => {
+  const projectsFormated = await cleanTimeStamps(projects);
+
+  await projectsFormated.forEach((project, index) => {
+    project.duration_days = project.estimated_duration;
+    project.hours_day = project.expected_hours;
+    project.external_id = JSON.stringify(project.external_id);
+
     if (project.starting_at instanceof Date) {
       project.start_at = project.starting_at;
     }
@@ -75,9 +87,31 @@ const formatProjects = async (projects) => {
     if (!project.special) {
       delete project.special;
     }
-    project.duration_days = project.estimated_duration;
-    project.hours_day = project.expected_hours;
-    project.external_id = JSON.stringify(project.external_id);
+    if (!project.customer_id) {
+      delete project.customer_id;
+    }
+    if (!project.updated_by) {
+      delete project.updated_by;
+    }
+    if (!project.referer_id) {
+      delete project.referer_id;
+    }
+    if (!project.duration_days) {
+      delete project.duration_days;
+    }
+    if (!project.hours_day) {
+      delete project.hours_day;
+    }
+    if (!project.budget_min) {
+      delete project.budget_min;
+    }
+    if (!project.budget_min) {
+      delete project.budget_max;
+    }
+    if (!project.status) {
+      delete project.status;
+    }
+
     delete project.starting_at;
     delete project.date_time;
     delete project.candidates;
@@ -88,7 +122,7 @@ const formatProjects = async (projects) => {
     delete project.expected_hours;
     delete project.estimated_duration;
   });
-  return projects;
+  return projectsFormated;
 };
 const formatProjectSkills = async (projectSkills) => {
   await projectSkills.forEach((projectSkill) => {
@@ -117,6 +151,22 @@ const formatAnswers = async (answers) => {
       delete answer.deleted_at;
     }
     delete answer.deleted_at;
+  });
+  await answers.filter(async (answer) => {
+    const response = await hasuraClient.request(getUserById, {
+      id: answer.user_id,
+    });
+
+    const isTrue = !(
+      !answer.user_id ||
+      !response.users[0] ||
+      answer.id === 632 ||
+      answer.id === 633 ||
+      answer.id === 634 ||
+      answer.id === 635
+    );
+
+    return isTrue;
   });
   return answers;
 };
@@ -153,6 +203,20 @@ const formatProjectUser = async (array) => {
   });
   return arrayFormated;
 };
+const formatUserSkills = async (userSkills) => {
+  const userSkillsFormated = await cleanTimeStamps(userSkills);
+  await userSkillsFormated.forEach((skill) => {
+    if (!skill.started_at) {
+      delete skill.started_at;
+    } else {
+      const date = moment(skill.started_at, "YYYY-MM-DD", true);
+      if (!date.isValid()) {
+        delete skill.started_at;
+      }
+    }
+  });
+  return userSkillsFormated;
+};
 const formatWebs = async (webs) => {
   const websFormated = await cleanTimeStamps(webs);
   await websFormated.forEach((web) => {
@@ -164,6 +228,15 @@ const formatWebs = async (webs) => {
       delete web.contacted_by;
     }
   });
+  // const websFiltered = await websFormated.filter(async (web, index) => {
+  //   const user = _.find(users, function (user) {
+  //     return user.id == web.user_id;
+  //   });
+  //   if (!user) {
+  //     console.log(web.id + ",");
+  //   }
+  //   return true;
+  // });
   return websFormated;
 };
 module.exports = {
@@ -177,4 +250,5 @@ module.exports = {
   formatLanguages,
   formatProjectUser,
   formatWebs,
+  formatUserSkills,
 };
